@@ -2,11 +2,25 @@ import dbConnection from "@/lib/dbConnection";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
 import bcrypt from "bcryptjs";
 import UserModel from "@/model/User";
+import { signUpSchema } from "@/Schemas/signUpSchema";
 
 export async function POST(request: Request) {
   await dbConnection();
   try {
-    const { username, email, password } = await request.json();
+    const body = await request.json();
+    const parsedBody = signUpSchema.safeParse(body);
+
+    if (!parsedBody.success) {
+      return Response.json(
+        {
+          success: false,
+          message: parsedBody.error.issues[0]?.message ?? "Invalid input data",
+        },
+        { status: 400 },
+      );
+    }
+
+    const { username, email, password } = parsedBody.data;
 
     const isUserExistWithUsenameandVerifield = await UserModel.findOne({
       username,
@@ -38,20 +52,20 @@ export async function POST(request: Request) {
         const hashPassword = await bcrypt.hash(password, 10);
         isUserEmailExist.password = hashPassword;
         isUserEmailExist.verifyCode = verifyCode;
-        isUserEmailExist.verifyCodeExpiry = new Date(Date.now() * 360000);
+        isUserEmailExist.verifyCodeExpiry = new Date(Date.now() + 360000);
 
         await isUserEmailExist.save();
       }
     } else {
       const hashPassword = await bcrypt.hash(password, 10);
       const expiry = new Date();
-      expiry.setHours(expiry.getHours() + 360000);
+      expiry.setHours(expiry.getHours() + 1);
       const newUser = new UserModel({
         email,
         password: hashPassword,
         username,
         verifyCode,
-        veryfyCodeExpiry: expiry,
+        verifyCodeExpiry: expiry,
         isVerified: false,
         isAcceptingMessage: false,
         message: [],
