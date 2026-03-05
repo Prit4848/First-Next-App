@@ -1,0 +1,4 @@
+MONGODB_URI='mongodb+srv://pritrajput415:Prit%402005@firstnextapp.pvr0uxn.mongodb.net'
+RESEND_API_KEY="re_VSSrx9QW_JqCrS7Nwud6Fxum1oyXQG8bL"
+FROM_MAIL='delivered@resend.dev'
+NEXT_AUTH_SECRED='New_Project_secred'
