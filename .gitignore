@@ -10,6 +10,7 @@
 !.yarn/releases
 !.yarn/versions
 
+change.diff
 # testing
 /coverage
 
