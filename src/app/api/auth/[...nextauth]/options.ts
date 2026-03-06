@@ -7,15 +7,15 @@ import UserModel from "@/model/User";
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      id: "Creadeantials",
-      name: "Creadeantials",
+      id: "credentials",
+      name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(
         credentials: { username: string; password: string } | undefined,
-      ): Promise<any> {
+      ): Promise<unknown> {
         await dbConnection();
         try {
           if (!credentials?.username || !credentials?.password) {

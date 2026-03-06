@@ -21,7 +21,8 @@ export async function POST(request: Request) {
     }
 
     const { username, email, password } = parsedBody.data;
-
+    console.log(username,email,password);
+    
     const isUserExistWithUsenameandVerifield = await UserModel.findOne({
       username,
       isVerified: true,
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
-    const verifyCode = Math.floor(100000 + Math.random() * 9000000).toString();
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
     const isUserEmailExist = await UserModel.findOne({
       email,
     });

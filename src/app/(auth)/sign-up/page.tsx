@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
   const [username, setUsername] = useState("");
@@ -21,6 +22,7 @@ const Page = () => {
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmiting, setIsSubmiting] = useState(false);
   const debouncedUsername = useDebounceCallback(setUsername, 300);
+  const router = useRouter()
 
   //zod implimentation
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -60,8 +62,11 @@ const Page = () => {
   const onSubmiting = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmiting(true);
     try {
+      console.log(data);
+      
       const response = await axios.post(`/api/sign-up`, data);
       toast.success(response.data?.message);
+      router.replace(`/verify/${username}`)
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       const errorMessage = axiosError.response?.data?.message;

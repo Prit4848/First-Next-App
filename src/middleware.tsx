@@ -2,7 +2,10 @@ import {NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
   const url = request.nextUrl;
   const isAuthPage =
     url.pathname.startsWith("/sign-in") ||
@@ -24,5 +27,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/sign-in", "/sign-up", "/verify", "/dashboard/:path*"],
+  matcher: ["/sign-in", "/sign-up", "/verify/:path*", "/dashboard/:path*"],
 };
