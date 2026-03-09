@@ -19,11 +19,15 @@ export async function POST(request: Request) {
   }
 
   const userId = user?._id;
-  const { accepMessage } = await request.json();
+  const { acceptMessage, accepMessage } = await request.json();
+  const nextAcceptingState =
+    typeof acceptMessage === "boolean"
+      ? acceptMessage
+      : Boolean(accepMessage);
   try {
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
-      { isAcceptingMessage: accepMessage },
+      { isAcceptingMessage: nextAcceptingState },
       { new: true },
     );
 
@@ -84,7 +88,7 @@ export async function GET(request: Request) {
       {
         success: true,
         message: "Accept Message",
-        isAcceptingMessages: foundUser?.isAcceptingMessage,
+        isAcceptingMessage: foundUser?.isAcceptingMessage,
       },
       { status: 200 },
     );
