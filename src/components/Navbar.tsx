@@ -16,12 +16,12 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-950/75 backdrop-blur-md">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center p-4 md:px-8">
         {/* Brand/Logo */}
-        <a
+        <Link
           href="/"
           className="text-2xl font-extrabold tracking-tighter bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent hover:to-purple-400 transition-all duration-300 mb-4 md:mb-0"
         >
           True Feedback
-        </a>
+        </Link>
 
         <div className="flex items-center gap-6">
           {session ? (

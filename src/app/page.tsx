@@ -42,7 +42,7 @@ export default function Home() {
                       <div>
                         <h3 className="font-semibold text-xl text-purple-100">{msg.title}</h3>
                         <p className="mt-4 text-gray-300 leading-relaxed italic">
-                          "{msg.content}"
+                          &ldquo;{msg.content}&rdquo;
                         </p>
                       </div>
                     </div>

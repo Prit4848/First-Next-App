@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import dbConnection from "@/lib/dbConnection";
 import UserModel from "@/model/User";
+import { User as NextAuthUser } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -15,7 +16,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(
         credentials: { username: string; password: string } | undefined,
-      ): Promise<unknown> {
+      ): Promise<NextAuthUser | null> {
         await dbConnection();
         try {
           if (!credentials?.username || !credentials?.password) {
@@ -44,7 +45,14 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Invalid Email Or Password");
           }
 
-          return user;
+          return {
+            id: user._id.toString(),
+            _id: user._id.toString(),
+            email: user.email,
+            username: user.username,
+            isVerifield: user.isVerified,
+            isAcceptingMessages: user.isAcceptingMessage,
+          };
         } catch (error: unknown) {
           throw new Error(
             error instanceof Error ? error.message : "An error occurred",

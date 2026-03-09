@@ -136,12 +136,14 @@ function Page() {
                       onClick={() => form.setValue("content", msg)}
                       className="text-left p-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-purple-500/50 hover:bg-slate-900 transition-all text-slate-300 text-sm italic"
                     >
-                      "{msg}"
+                      &ldquo;{msg}&rdquo;
                     </button>
                   ))}
                 </div>
               ) : (
-                <p className="text-center text-slate-500 py-4">Click "Refresh Suggestions" to see some ideas!</p>
+                <p className="text-center text-slate-500 py-4">
+                  Click &ldquo;Refresh Suggestions&rdquo; to see some ideas!
+                </p>
               )}
             </CardContent>
           </Card>

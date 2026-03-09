@@ -4,7 +4,9 @@ type ConnectionObject = {
     isConnected:number
 }
 
-const connection:ConnectionObject = {}
+const connection:ConnectionObject = {
+    isConnected: 0
+}
 
 async function dbConnection():Promise<void>{
     if(connection.isConnected){
@@ -19,7 +21,7 @@ async function dbConnection():Promise<void>{
          console.log("DB Connected Sucessfully");
          
     } catch (error) {
-        console.log("Db Connection Error:");
+        console.log("Db Connection Error:", error);
         process.exit(1)
     }
 }
